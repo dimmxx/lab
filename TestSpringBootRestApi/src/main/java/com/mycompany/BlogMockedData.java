@@ -1,6 +1,5 @@
 package com.mycompany;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +41,6 @@ public class BlogMockedData {
                         "So while the turkey cooks and the family gathers, here are some questions to ask your Assistant."));
     }
 
-
     public List<Blog> fetchBlogs(){
         return blogs;
     }
@@ -56,7 +54,46 @@ public class BlogMockedData {
         return null;
     }
 
+    public Blog createBlog(int id, String title, String contetnt){
+        Blog blog = new Blog(id, title, contetnt);
+        blogs.add(blog);
+        return blog;
+    }
 
+    public List<Blog> searchBlog(String text){
+        List<Blog> list = new ArrayList<>();
+        for(Blog b: blogs){
+            if(b.getTitle().contains(text) || b.getContent().contains(text)){
+                list.add(b);
+            }
+        }
+        return list;
+    }
+
+    public Blog updateBlog(int id, Blog blog){
+        for(int i = 0; i < blogs.size(); i++){
+            if(blogs.get(i).getId() == id){
+               blogs.add(i, blog);
+               return blog;
+            }
+        }
+        return null;
+    }
+
+    public boolean deleteBlog(int id){
+        int indexOfBlog = -1;
+        for(Blog b : blogs){
+            if(b.getId() == id){
+                indexOfBlog = blogs.indexOf(b);
+                continue;
+            }
+        }
+        if(indexOfBlog > -1){
+            blogs.remove(indexOfBlog);
+            return true;
+        }
+        return false;
+    }
 
 
 
