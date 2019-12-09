@@ -32,9 +32,6 @@ public class BlogController {
         return new ResponseEntity<>("File uploaded succesfully", HttpStatus.OK);
     }
 
-
-
-
     @GetMapping("/blog")
     public List<Blog> index() {
         return blogMockedData.fetchBlogs();
