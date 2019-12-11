@@ -15,7 +15,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "pages")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@EntityListeners(AuditingEntityListener.class)
 //@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 public class Page  {
@@ -32,9 +32,18 @@ public class Page  {
     //@JsonManagedReference
     private List<Note> note;
 
-//      @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-////    //@JsonManagedReference
-//   private List<Note> note;
+
+    public Page() {
+    }
+
+    public Page(String color, List<Note> note) {
+        this.color = color;
+        this.note = note;
+    }
+
+    public Page(String color) {
+        this.color = color;
+    }
 
     public Long getId() {
         return id;
@@ -61,4 +70,12 @@ public class Page  {
     }
 
 
+    @Override
+    public String toString() {
+        return "Page{" +
+                "id=" + id +
+                ", color='" + color + '\'' +
+                ", note=" + note +
+                '}';
+    }
 }

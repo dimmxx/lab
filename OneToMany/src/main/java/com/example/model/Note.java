@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -15,7 +16,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "notes")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@EntityListeners(AuditingEntityListener.class)
 //@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 public class Note {
@@ -43,10 +44,6 @@ public class Note {
     //@LastModifiedDate
     private String updatedAt;
 
-    //private Page page;
-
-
-
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "page_id")
@@ -54,7 +51,31 @@ public class Note {
     private Page page;
 
 
+    public Note() {
+    }
 
+    public Note(String title, String content, String createdAt, String updatedAt, Page page) {
+        this.title = title;
+        this.content = content;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.page = page;
+    }
+
+    public Note(String title, String content, String createdAt, String updatedAt) {
+        this.title = title;
+        this.content = content;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public Page getPage() {
+        return page;
+    }
+
+    public void setPage(Page page) {
+        this.page = page;
+    }
 
     public Long getId() {
         return id;
@@ -97,4 +118,16 @@ public class Note {
         this.updatedAt = updatedAt;
     }
 
+
+    @Override
+    public String toString() {
+        return "Note{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", page=" + page +
+                '}';
+    }
 }
