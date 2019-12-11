@@ -23,7 +23,7 @@ public class NoteController {
     }
 
     @PostMapping("/notes")
-    public Note createNote(@Valid @RequestBody Note note){
+    public Note createNote(@RequestBody Note note){
         return noteRepository.save(note);
     }
 
@@ -38,7 +38,7 @@ public class NoteController {
 //    }
 
     @PutMapping("/notes/{id}")
-    public Note updateNoteById(@PathVariable(value = "id") Long id, @Valid @RequestBody Note newNote){
+    public Note updateNoteById(@PathVariable(value = "id") Long id, @RequestBody Note newNote){
         Note note = noteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Note", "id", id));
         note.setTitle(newNote.getTitle());
         note.setContent(newNote.getContent());

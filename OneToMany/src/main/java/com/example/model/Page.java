@@ -1,6 +1,9 @@
 package com.example.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -12,9 +15,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "pages")
-@EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
-public class Page implements Serializable {
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//@EntityListeners(AuditingEntityListener.class)
+//@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
+public class Page  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,12 +26,15 @@ public class Page implements Serializable {
     private Long id;
 
     @Column(name = "color")
-    @NotBlank
     private String color;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "page")
-    private List<Note> note = new ArrayList<>();
+    @OneToMany(mappedBy = "page", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    //@JsonManagedReference
+    private List<Note> note;
 
+//      @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+////    //@JsonManagedReference
+//   private List<Note> note;
 
     public Long getId() {
         return id;
@@ -52,4 +59,6 @@ public class Page implements Serializable {
     public void setNote(List<Note> note) {
         this.note = note;
     }
+
+
 }

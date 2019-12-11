@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
-@EnableJpaAuditing
+//@EnableJpaAuditing
 public class OneToManyApplication {
 
 	//https://www.callicoder.com/spring-boot-rest-api-tutorial-with-mysql-jpa-hibernate/
