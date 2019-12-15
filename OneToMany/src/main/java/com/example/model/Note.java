@@ -19,7 +19,7 @@ import java.util.Date;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@EntityListeners(AuditingEntityListener.class)
 //@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
-public class Note {
+public class Note implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,21 +52,7 @@ public class Note {
 
 
     public Note() {
-    }
 
-    public Note(String title, String content, String createdAt, String updatedAt, Page page) {
-        this.title = title;
-        this.content = content;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.page = page;
-    }
-
-    public Note(String title, String content, String createdAt, String updatedAt) {
-        this.title = title;
-        this.content = content;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
     public Page getPage() {

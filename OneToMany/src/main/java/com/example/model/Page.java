@@ -18,7 +18,7 @@ import java.util.List;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@EntityListeners(AuditingEntityListener.class)
 //@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
-public class Page  {
+public class Page implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,17 +32,7 @@ public class Page  {
     //@JsonManagedReference
     private List<Note> note;
 
-
     public Page() {
-    }
-
-    public Page(String color, List<Note> note) {
-        this.color = color;
-        this.note = note;
-    }
-
-    public Page(String color) {
-        this.color = color;
     }
 
     public Long getId() {
