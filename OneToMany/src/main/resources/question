@@ -1,0 +1,60 @@
+There is such a project in Spring-boot:
+
+Model Page:
+
+```
+@Entity
+@Table(name = "pages")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+public class Page implements Serializable{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "color")
+    private String color;
+
+    @OneToMany(mappedBy = "page", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    //@JsonManagedReference
+    private List<Note> note;
+
+    // constructor, getters and setters
+
+```
+
+ Model Note (One page can have many notes):
+
+```
+@Entity
+@Table(name = "notes")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+public class Note implements Serializable{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "content")
+    private String content;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "page_id")
+    private Page page;
+
+// constructor, getters and setters
+
+```
+Controller:
+
+ ```@PostMapping("/pages/create")
+    public ResponseEntity<Object> createPage(@RequestBody Page page) {
+        pageRepository.saveAndFlush(page);
+        return new ResponseEntity("OK", HttpStatus.OK);
+    }
+```

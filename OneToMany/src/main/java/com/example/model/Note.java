@@ -34,17 +34,6 @@ public class Note implements Serializable{
     //@NotBlank
     private String content;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
-    //@Temporal(TemporalType.TIMESTAMP)
-    //@CreatedDate
-    private String createdAt;
-
-    @Column(name = "updated_at", nullable = false)
-    //@Temporal(TemporalType.TIMESTAMP)
-    //@LastModifiedDate
-    private String updatedAt;
-
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "page_id")
     //@JsonBackReference
@@ -88,31 +77,12 @@ public class Note implements Serializable{
         this.content = content;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-
     @Override
     public String toString() {
         return "Note{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", createdAt='" + createdAt + '\'' +
-                ", updatedAt='" + updatedAt + '\'' +
                 ", page=" + page +
                 '}';
     }
