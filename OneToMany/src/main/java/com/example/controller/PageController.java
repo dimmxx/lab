@@ -59,6 +59,15 @@ public class PageController {
 
     @PostMapping("/pages/create")
     public ResponseEntity<Object> createPage(@RequestBody Page page) {
+
+        //page.getNote().forEach(note -> note.setPage(page));
+
+        List<Note> noteList = page.getNote();
+        for(Note note : noteList){
+            note.setPage(page);
+        }
+        page.setNote(noteList);
+
         pageRepository.saveAndFlush(page);
         return new ResponseEntity("OK", HttpStatus.OK);
     }

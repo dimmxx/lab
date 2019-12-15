@@ -35,7 +35,7 @@ public class Note implements Serializable{
     private String content;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "page_id")
+    @JoinColumn(name = "page_id", nullable = false)
     //@JsonBackReference
     private Page page;
 
