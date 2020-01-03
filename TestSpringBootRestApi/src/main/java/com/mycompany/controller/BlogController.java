@@ -1,5 +1,7 @@
-package com.mycompany;
+package com.mycompany.controller;
 
+import com.mycompany.model.Blog;
+import com.mycompany.BlogMockedData;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

@@ -1,5 +1,7 @@
 package com.mycompany;
 
+import com.mycompany.model.Blog;
+
 import java.util.ArrayList;
 import java.util.List;
 
