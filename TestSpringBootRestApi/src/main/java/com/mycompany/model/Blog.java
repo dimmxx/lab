@@ -1,8 +1,11 @@
 package com.mycompany.model;
 
+import javax.validation.constraints.NotNull;
+
 public class Blog {
 
     private int id;
+    @NotNull(message = "First Name cannot be null")
     private String title;
     private String content;
 
