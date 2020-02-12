@@ -1,0 +1,161 @@
+
+//    public static CellPosition findStartCellPosition(Workbook workbook, String sheetName, String marker) {
+//        CellPosition cellPosition = new CellPosition();
+//
+//        Sheet sheet = workbook.getSheet(sheetName);
+//
+////        System.out.println(sheet.getRow(0).getCell(0));
+////        System.out.println(sheet.getActiveCell());
+////        System.out.println(sheet.getFirstRowNum());
+////        System.out.println(sheet.getLastRowNum());
+//
+//
+//        for (int i = 0; i < 5; i++) {
+//
+//            Row cRow = sheet.getRow(i);
+//
+//            for (int j = 0; j < 5; j++) {
+//                Cell cell = cRow.getCell(j);
+//                System.out.println(cell);
+//
+//                if (cell.getCellType() == CellType.STRING) {
+//                    System.out.println(i);
+//                    System.out.println(j);
+//                }
+//            }
+//        }
+
+
+//        Iterator<Row> rowIterator = sheet.iterator();
+//        while (rowIterator.hasNext()) {
+//            Row currentRow = rowIterator.next();
+//            Iterator<Cell> cellIterator = currentRow.iterator();
+//            while (cellIterator.hasNext()) {
+//                Cell currentCell = cellIterator.next();
+//                if (currentCell.getCellType() == CellType.STRING) {
+//                    System.out.print(currentCell.getStringCellValue() + "|");
+//                } else if (currentCell.getCellType() == CellType.NUMERIC) {
+//                    System.out.print(currentCell.getNumericCellValue() + "|");
+//                }
+//            }
+//            System.out.println();
+//
+//        }
+//        System.out.println("end");
+//
+//
+//        return null;
+//    }
+
+//    public static CellPosition findMarker(Workbook workbook, String sheetName, String marker) {
+//        CellPosition cellPosition = new CellPosition();
+//        Sheet sheet = workbook.getSheet(sheetName);
+//
+//        for (int i = 0; i < 1; i++) {
+//            Row cRow = sheet.getRow(i);
+//            for (int j = 0; j < 200; j++) {
+//                Cell cell = cRow.getCell(j);
+//
+//                if (cell.getCellType() == CellType.STRING) {
+//                    System.out.print(cell.getStringCellValue() + "|");
+//                } else if (cell.getCellType() == CellType.NUMERIC) {
+//                    System.out.print(cell.getNumericCellValue() + "|");
+//                }
+//
+//
+//            }
+//        }
+//        return cellPosition;
+//    }
+//}
+
+
+
+
+//            for (int i = 0; i < 100; i++) {
+//                if (sheet.getRow(i) == null) sheet.createRow(i);
+//                for (int j = 0; j < 100; j++) {
+//                    if (sheet.getRow(i).getCell(j) == null) sheet.getRow(i).createCell(j);
+//                }
+//            }
+
+
+            //Map<Integer, List<String>> map = findMarker(workbook, sheet, "additional_positions_marker");
+
+
+            //parseWithIterator(workbook, sheet, "");
+
+
+
+
+
+
+            public static Map<Integer, List<String>> findMarker(Workbook workbook, Sheet sheet, String marker) {
+        Map<Integer, List<String>> data = new HashMap<>();
+        int i = 0;
+        for (Row row : sheet) {
+            data.put(i, new ArrayList<String>());
+            for (Cell cell : row) {
+
+
+
+
+                switch (cell.getCellType()) {
+                    case STRING:
+                        if (cell == null) data.get(i).add("null");
+                        data.get(i).add(cell.getStringCellValue());
+                        break;
+                    case NUMERIC:
+                        if (cell == null) data.get(i).add("null");
+                        data.get(i).add(String.valueOf(cell.getNumericCellValue()));
+                        break;
+                    case BOOLEAN:
+                        break;
+                    case FORMULA:
+                        break;
+                    default:
+                        if (cell == null) data.get(i).add("null");
+                        data.get(i).add("0");
+                }
+            }
+            i++;
+        }
+        return data;
+    }
+
+
+
+
+
+     public static void parseWithIterator(Workbook workbook, Sheet sheet, String marker) {
+
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row currentRow = rowIterator.next();
+            Iterator<Cell> cellIterator = currentRow.iterator();
+            while (cellIterator.hasNext()) {
+                Cell currentCell = cellIterator.next();
+
+
+
+
+                    System.out.println("!!!");
+
+                if (currentCell.getCellType() == CellType.STRING) {
+                    System.out.print(currentCell.getStringCellValue() + "|");
+                } else if (currentCell.getCellType() == CellType.NUMERIC) {
+                    System.out.print(currentCell.getNumericCellValue() + "|");
+                }
+            }
+            System.out.println();
+
+        }
+    }
+
+
+
+
+
+
+
+
