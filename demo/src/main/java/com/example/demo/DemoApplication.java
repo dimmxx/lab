@@ -11,10 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @SpringBootApplication
 public class DemoApplication {
@@ -25,7 +22,7 @@ public class DemoApplication {
         try {
             FileInputStream excelFile = new FileInputStream(new File("src/main/resources/parse.xlsx"));
             Workbook workbook = new XSSFWorkbook(excelFile);
-            String sheetName = "matrix_1";
+            String sheetName = "test";
 
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -46,6 +43,15 @@ public class DemoApplication {
 
         System.out.println("Parsing started: " + sheet.getLastRowNum() + " rows, " + maxCellNum + " cells");
 
+
+        System.out.println(sheet.getNumMergedRegions());
+        System.out.println(Arrays.toString(sheet.getMergedRegions().toArray()));
+        System.out.println(sheet.getMergedRegion(2));
+
+
+
+
+
         Map<Integer, List<String>> data = new HashMap<>();
         for (int i = 0; i <= sheet.getLastRowNum(); i++) {
             Row row = sheet.getRow(i);
@@ -56,6 +62,7 @@ public class DemoApplication {
             data.put(i, new ArrayList<String>());
             for (int j = 0; j <= maxCellNum; j++) {
                 Cell cell = row.getCell(j);
+
                 if (cell == null) {
                     row.createCell(j);
                     data.get(i).add("#NULL");
