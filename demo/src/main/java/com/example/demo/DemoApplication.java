@@ -1,6 +1,9 @@
 package com.example.demo;
 
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,7 +11,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @SpringBootApplication
 public class DemoApplication {
@@ -23,7 +29,7 @@ public class DemoApplication {
 
             Sheet sheet = workbook.getSheet(sheetName);
 
-            Map<Integer, List<String>> map = parseWithFor(workbook, sheet, "");
+            Map<Integer, List<String>> map = parseXLSXToMap(workbook, sheet);
             map.entrySet().forEach(entry -> System.out.println(entry.getKey() + " " + entry.getValue()));
 
         } catch (IOException e) {
@@ -31,20 +37,19 @@ public class DemoApplication {
         }
     }
 
-    public static Map<Integer, List<String>> parseWithFor(Workbook workbook, Sheet sheet, String marker) {
+    public static Map<Integer, List<String>> parseXLSXToMap(Workbook workbook, Sheet sheet) {
         //finding out the max number of cells in a row
         int maxCellNum = 0;
-        for(Row row : sheet){
-            if(maxCellNum < row.getLastCellNum()) maxCellNum = row.getLastCellNum();
+        for (Row row : sheet) {
+            if (maxCellNum < row.getLastCellNum()) maxCellNum = row.getLastCellNum();
         }
 
-        System.out.println(sheet.getLastRowNum());
-        System.out.println(maxCellNum);
+        System.out.println("Parsing started: " + sheet.getLastRowNum() + " rows, " + maxCellNum + " cells");
 
         Map<Integer, List<String>> data = new HashMap<>();
-        for (int i = 0; i <= sheet.getLastRowNum() ; i++) {
+        for (int i = 0; i <= sheet.getLastRowNum(); i++) {
             Row row = sheet.getRow(i);
-            if(row == null){
+            if (row == null) {
                 sheet.createRow(i);
                 row = sheet.getRow(i);
             }
@@ -64,8 +69,19 @@ public class DemoApplication {
                         data.get(i).add(String.valueOf(cell.getNumericCellValue()));
                         break;
                     case BOOLEAN:
+                        data.get(i).add("#BOOLEAN");
                         break;
                     case FORMULA:
+                        data.get(i).add("#FORMULA");
+                        break;
+                    case BLANK:
+                        data.get(i).add("0.0");
+                        break;
+                    case _NONE:
+                        data.get(i).add("#_NONE");
+                        break;
+                    case ERROR:
+                        data.get(i).add("#ERROR");
                         break;
                     default:
                         data.get(i).add("#VALUE");
